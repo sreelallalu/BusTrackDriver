@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <Button
+
+                android:layout_alignParentRight="true"
+                android:text="start >>"
+android:layout_alignBottom="@+id/map"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/distaceplacebutton"
+                android:layout_width="100dp"
+                android:layout_height="40dp" />
+            <Button
+
+                android:layout_centerVertical="true"
+                android:text="path"
+                android:layout_alignBottom="@+id/map"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/statrtyplacebutton"
+                android:layout_width="100dp"
+                android:layout_height="40dp" />
+            <Button
+                android:layout_alignParentLeft="true"
+                android:text="Stops"
+                android:layout_alignBottom="@+id/map"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/clearplacebutton"
+                android:layout_width="100dp"
+                android:layout_height="40dp" />
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.nyesteveturetech.nvtglobaljobs.googlemapdemo.MapsActivity"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:text=""
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <LinearLayout
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+               android:id="@+id/bsource"
+               android:layout_marginLeft="20dp"
+                android:textSize="9dp"
+                android:layout_weight="50"
+                android:text="source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:id="@+id/bdestinatio"
+              android:layout_marginLeft="20dp"
+                android:textSize="9dp"
+                android:layout_weight="50"
+                android:text="destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:layout_marginLeft="20dp"
+                android:textSize="9dp"
+                android:layout_weight="50"
+                android:text="sourcetime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bstime" />
+
+
+            <TextView
+                android:id="@+id/bdtime"
+                android:layout_marginLeft="20dp"
+                android:textSize="9dp"
+                android:layout_weight="50"
+                android:text="destinationtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+android:gravity="end"
+                android:layout_marginLeft="20dp"
+                android:textSize="9dp"
+                android:layout_weight="50"
+                android:text="Total Hrs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+
+            <TextView
+                android:id="@+id/bthrs"
+                android:layout_marginLeft="5dp"
+                android:textSize="9dp"
+                android:layout_weight="50"
+                android:text="hrs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+               android:layout_marginLeft="50dp"
+                android:layout_weight="5"
+                android:text="TOTAL KM :"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView" />
+
+            <TextView
+                android:id="@+id/btkm"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
+                android:layout_weight="5"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="5dp"
+            android:background="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginLeft="50dp"
+                android:layout_weight="5"
+                android:text="CURRENT PLACE :"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewcv" />
+
+            <TextView
+                android:id="@+id/bcuplace"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
+                android:layout_weight="5"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginLeft="50dp"
+                android:layout_weight="5"
+                android:text="REMAIN KM :"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewcvx" />
+
+            <TextView
+                android:id="@+id/brkm"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
+                android:layout_weight="5"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:text="Delay Time / minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3" />
+
+            <EditText
+                android:id="@+id/delaytime"
+                android:inputType="time"
+            android:layout_marginLeft="10dp"
+            android:hint="time"
+                android:text="0"
+            android:layout_weight="50"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+            <Button
+
+                android:text="send"
+                android:layout_marginLeft="5dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/buttonsendresume" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
