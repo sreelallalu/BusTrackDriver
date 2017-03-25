@@ -24,6 +24,7 @@ import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Databae.Trip2;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Itemns.LoginItems;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Itemns.Stop;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Itemns.Trip;
+import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Items.DataConductorId;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Items.DataHolder;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.WebService.RestBuilderPro;
 
@@ -55,7 +56,6 @@ public class MapsActivity extends FragmentActivity {
         _pass=(EditText)findViewById(R.id.bus_pass);
         Calendar c = Calendar.getInstance();
         standard = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
         currentDate=standard.format(c.getTime());
         dialog=new ProgressDialog(MapsActivity.this);
 
@@ -131,6 +131,8 @@ public class MapsActivity extends FragmentActivity {
 
                     if(suss.contains("1"))
                     {
+
+                        DataConductorId.getInstance().setDistributor_id(logj.getCunductor_Id());
 
 
                     final List<Trip> tripItems=logj.getTrip();

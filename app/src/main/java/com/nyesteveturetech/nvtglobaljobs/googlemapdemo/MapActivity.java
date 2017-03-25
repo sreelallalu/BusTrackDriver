@@ -49,6 +49,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Itemns.LoginItems;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Itemns.Trip;
+import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Items.DataConductorId;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Items.DataHolder;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.WebService.RestBuilderPro;
 
@@ -60,6 +61,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -102,6 +104,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     boolean nopath,startb;
     String s_source,s_destination,_s_stime,_s_dtime,s_thrs,s_tokm,s_cuplace,s_remainkm,s_date;
     List<Trip> list;
+    LatLng firstpoint;
+    LatLng lastpoint;
+    float distance_Total=0;
+    float current_dis1=0;
+    boolean marchcheck;
+
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -299,6 +308,8 @@ textview=(FloatingSearchView)findViewById(R.id.floating_search_view);
             for (int i = 0; i < stoplistmark.size(); i++) {
                 MarkerOptions options = new MarkerOptions();
 
+                firstpoint=stoplistmark.get(0).getLatitude();
+                lastpoint=stoplistmark.get(stoplistmark.size()-1).getLatitude();
 
                 LatLng latLng = new LatLng(8.5582542, 76.862711);
                 options.position(stoplistmark.get(i).getLatitude());
@@ -330,24 +341,24 @@ textview=(FloatingSearchView)findViewById(R.id.floating_search_view);
         final LatLng origin = markerPoints.get(0);
         LatLng dest = markerPoints.get(1);
         final Location mylocation = new Location("");
-        dest_location = new Location("");
+        final Location   dest_location = new Location("");
         double lat = dest.latitude;
         double lon = dest.longitude;
-        dest_location.setLatitude(lat);
-        dest_location.setLongitude(lon);
+        dest_location.setLatitude(lastpoint.latitude);
+        dest_location.setLongitude(lastpoint.longitude);
 
-        mylocation.setLatitude(origin.latitude);
-        mylocation.setLongitude(origin.longitude);
+        mylocation.setLatitude(firstpoint.latitude);
+        mylocation.setLongitude(firstpoint.longitude);
         try {
             Geocoder geocoder = new Geocoder(MapActivity.this, Locale.getDefault());
             List<android.location.Address> addresses,adress = null;
             addresses = geocoder.getFromLocation(origin.latitude, origin.longitude, 1);
             adress=geocoder.getFromLocation(dest.latitude, dest.longitude, 1);
-            String cityName = addresses.get(0).getAddressLine(0);
-            String cityName1 = adress.get(0).getAddressLine(0);
+            //String cityName = addresses.get(0).getAddressLine(0);
+          //  String cityName1 = adress.get(0).getAddressLine(0);
 
-            int distance = (int) mylocation.distanceTo(dest_location) / 1000;
-            _tokm.setText("" + distance + "KM");
+            distance_Total = (float) mylocation.distanceTo(dest_location) / 1000;
+            _tokm.setText("" + distance_Total + "KM");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -357,8 +368,8 @@ textview=(FloatingSearchView)findViewById(R.id.floating_search_view);
     private void LocationPath() {
         if(br) {
             nopath=true;
-            final LatLng origin = markerPoints.get(0);
-            LatLng dest = markerPoints.get(1);
+            final LatLng origin = firstpoint;
+            LatLng dest = lastpoint;
 
             // Getting URL to the Google Directions API
             String url = getDirectionsUrl(origin, dest);
@@ -459,10 +470,10 @@ textview=(FloatingSearchView)findViewById(R.id.floating_search_view);
             mCurrLocationMarker.remove();
         }
 
-new Handler().post(new Runnable() {
+/*  new Handler().post(new Runnable() {
     @Override
     public void run() {
-        LatLng latLng=CurrentLOcation(location);
+       LatLng latLng=CurrentLOcation(location);
 
         MarkerOptions options = new MarkerOptions();
 
@@ -493,7 +504,7 @@ new Handler().post(new Runnable() {
 
         }
     }
-});
+});*/
         //move map camera
 
 
@@ -510,8 +521,8 @@ new Handler().post(new Runnable() {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+      // markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+      //  mCurrLocationMarker = mMap.addMarker(markerOptions);
         markerPoints.add(latLng);
 return latLng;
     }
@@ -594,7 +605,7 @@ return latLng;
         if (this.mMap != null) {
             mMap.clear();
             markerPoints.clear();
-           CurrentLOcation (mLastLocation);
+        ///   CurrentLOcation (mLastLocation);
             //  PrefrencesUtils.putDouble("latitude", current_lat);
             // PrefrencesUtils.putDouble("longitude", current_longi);
             //startIntentService();
@@ -714,26 +725,40 @@ return latLng;
     @Override
     public boolean onMarkerClick(Marker marker) {
 
-        String latitude= String.valueOf(marker.getPosition().latitude);
-        String longitude= String.valueOf(marker.getPosition().longitude);
-        String place= String.valueOf(marker.getTitle());
-    double lat=marker.getPosition().latitude;
-        double log=marker.getPosition().latitude;
-        lat_o=lat;
-        log_o=log;
-
+        marchcheck=true;
+        String latitude = String.valueOf(marker.getPosition().latitude);
+        String longitude = String.valueOf(marker.getPosition().longitude);
+        String place = String.valueOf(marker.getTitle());
+        double lat = marker.getPosition().latitude;
+        double log = marker.getPosition().longitude;
+        lat_o = lat;
+        log_o = log;
+        double f_lat = firstpoint.latitude;
+        double f_long = firstpoint.longitude;
         final Location mylocation = new Location("");
-        mylocation.setLatitude(lat);
-        mylocation.setLongitude(log);
-        final Location dest = new Location("");
-       dest.setLatitude(markerPoints.get(1).latitude);
-        dest.setLongitude(markerPoints.get(1).longitude);
+
+        Location dest = new Location("");
+        if (lat != f_lat || log != f_long) {
+            mylocation.setLatitude(f_lat);
+            mylocation.setLongitude(f_long);
+            dest = new Location("");
+            dest.setLatitude(lat);
+            dest.setLongitude(log);
+           float current_dis = (float) mylocation.distanceTo(dest) / 1000;
+            _remaikm.setText(current_dis + "KM");
+
+            current_dis1=current_dis;
+        }else{
+            _remaikm.setText(0+ "KM");
+            current_dis1=0;
+
+        }
+
 
         // adress=geocoder.getFromLocation(dest.latitude, dest.longitude, 1);
-        distance_o = (int) mylocation.distanceTo(dest) / 1000;
+
 
         _currentplace.setText(marker.getTitle());
-        _remaikm.setText(distance_o+"KM");
 
 
 
@@ -895,11 +920,16 @@ return latLng;
 
 
     private void SendValue(final View v) {
-        v.setClickable(false);
+        //v.setClickable(false);
 
         if(!startb){
             Toast.makeText(this, "start Juerney", Toast.LENGTH_SHORT).show();
-            v.setClickable(true);
+            if(!marchcheck){
+
+                Toast.makeText(this, "mark a position ", Toast.LENGTH_SHORT).show();
+                return;
+            }
+           // v.setClickable(true);
             return;
         }
 
@@ -907,14 +937,27 @@ return latLng;
             String delaytimec=delayEdit.getText().toString();
             String busid=list.get(_id).getBusId();
             String trip=list.get(_id).getTripId();
-            String agency=list.get(_id).getAgencyID();
+            String conductorID = DataConductorId.getInstance().getDistributor_id();
+
+            Log.e("delaytime",delaytimec);
+            Log.e("busId",busid);
+            Log.e("triId",trip);
+            Log.e("conductorId",conductorID);
+            /*Log.e("lat_0",""+lat_o);
+            Log.e("long",""+log_o);*/
+            Log.e("remin",""+(distance_Total));
+            Log.e("remin",""+(current_dis1));
+           float remi=distance_Total-current_dis1;
+            DecimalFormat dec=new DecimalFormat("0.00");
+            String remnkm=dec.format(remi);
+            Log.e("remin kmmmm",remnkm);
             dialog.show();
-            RestBuilderPro.getService().authenticate1("addposition",""+lat_o,""+log_o,""+remainkm,delaytimec,""+agency,busid,trip).enqueue(new Callback<LoginItems>() {
+            RestBuilderPro.getService().authenticate1("addposition",""+lat_o,""+log_o,remnkm,delaytimec,conductorID,busid,trip).enqueue(new Callback<LoginItems>() {
                 @Override
                 public void onResponse(Call<LoginItems> call, Response<LoginItems> response) {
                    if(response.isSuccessful()){
                        dialog.dismiss();
-                       v.setClickable(true);
+                    //   v.setClickable(true);
                        LoginItems lob=response.body();
                        int k=Integer.parseInt(""+lob.getSuccess());
                        String message=lob.getMessage();
@@ -935,7 +978,7 @@ return latLng;
                 public void onFailure(Call<LoginItems> call, Throwable t) {
 
                     dialog.dismiss();
-                    v.setClickable(true);
+                   // v.setClickable(true);
                 }
             });
         }

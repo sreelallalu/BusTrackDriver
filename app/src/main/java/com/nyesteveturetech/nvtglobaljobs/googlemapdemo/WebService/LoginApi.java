@@ -35,10 +35,10 @@ public interface LoginApi{
     @POST("index.php/")
     Call<LoginItems> authenticate1
             (@Field("tag") String tag,
-             @Field("lat") String lat,
-             @Field("log") String log,
+             @Field("latitude") String lat,
+             @Field("longitude") String log,
              @Field("distance") String dis,
-             @Field("delay(minutes)") String reamtim,
+             @Field("delay") String reamtim,
              @Field("conductorId") String con,
              @Field("busId") String v,
              @Field("tripId") String vz

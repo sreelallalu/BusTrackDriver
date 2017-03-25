@@ -18,6 +18,9 @@ public class LoginItems {
     @Expose
     private String tag;
 
+    @SerializedName("conductorId")
+    @Expose
+    private String cunductor_Id;
     @SerializedName("success")
     @Expose
     private String success;
@@ -30,6 +33,14 @@ public class LoginItems {
     @SerializedName("trip")
     @Expose
     private List<Trip> trip = new ArrayList<>();
+
+    public String getCunductor_Id() {
+        return cunductor_Id;
+    }
+
+    public void setCunductor_Id(String cunductor_Id) {
+        this.cunductor_Id = cunductor_Id;
+    }
 
     public String getTag() {
         return tag;
