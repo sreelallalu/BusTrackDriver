@@ -51,8 +51,10 @@ import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Itemns.LoginItems;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Itemns.Trip;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Items.DataConductorId;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.Items.DataHolder;
+import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.WebService.Points;
 import com.nyesteveturetech.nvtglobaljobs.googlemapdemo.WebService.RestBuilderPro;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -109,7 +111,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     float distance_Total=0;
     float current_dis1=0;
     boolean marchcheck;
-
+String points[]= Points.points;
+    List<Double> lats;
+    List<Double> logs;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -155,6 +159,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             checkLocationPermission();
 
         }
+        KLOP hui=new KLOP("rahul");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -185,6 +190,8 @@ textview=(FloatingSearchView)findViewById(R.id.floating_search_view);
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        lats=new ArrayList<>();
+        logs=new ArrayList<>();
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
@@ -200,8 +207,34 @@ textview=(FloatingSearchView)findViewById(R.id.floating_search_view);
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+        try {
 
-       list= DataHolder.getInstance().getDistributor_id();
+for(int i=0;i<points.length;i++)
+{
+   String latlong=points[i];
+    String split[]=latlong.split(",");
+    String lat=split[0];
+    String log=split[1];
+    logs.add(Double.parseDouble(log));
+    lats.add(Double.parseDouble(lat));
+
+}
+
+
+for(int i=0;i<lats.size();i++) {
+    LatLng localLatLng = new LatLng(lats.get(i).doubleValue(), logs.get(i).doubleValue());
+    this.mMap.addMarker(new MarkerOptions().position(localLatLng).title("postion "+i));
+    this.mMap.moveCamera(CameraUpdateFactory.newLatLng(localLatLng));
+    markerPoints.add(localLatLng);
+
+}        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+      /* list= DataHolder.getInstance().getDistributor_id();
 
           s_source=list.get(_id).getSource();
         s_destination=list.get(_id).getDestination();
@@ -244,14 +277,14 @@ textview=(FloatingSearchView)findViewById(R.id.floating_search_view);
 
 
 
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+*/
 
 
 
-
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+        /*mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
                 LongClick(latLng);
@@ -262,9 +295,9 @@ textview=(FloatingSearchView)findViewById(R.id.floating_search_view);
             public void onClick(View v) {
 
                 Stops();
-               /* markerPoints.clear();
+               *//* markerPoints.clear();
                 mMap.clear();
-                br=false;*/
+                br=false;*//*
             }
         });
         path.setOnClickListener(new View.OnClickListener() {
@@ -283,19 +316,19 @@ textview=(FloatingSearchView)findViewById(R.id.floating_search_view);
             }
         });
 
+*/
 
 
 
 
 
-
-        delaysend.setOnClickListener(new View.OnClickListener() {
+      /* // delaysend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SendValue(v);
             }
         });
-
+*/
     }
 
     private void Stops() {
